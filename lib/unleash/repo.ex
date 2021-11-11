@@ -25,11 +25,11 @@ defmodule Unleash.Repo do
   end
 
   def get_feature(name) do
-    GenServer.call(Unleash.Repo, {:get_feature, name})
+    GenServer.call(Unleash.Repo, {:get_feature, name}, 100)
   end
 
   def get_all_feature_names do
-    GenServer.call(Unleash.Repo, {:get_all_feature_names})
+    GenServer.call(Unleash.Repo, {:get_all_feature_names}, 100)
   end
 
   def handle_call({:get_feature, name}, _from, state) do
@@ -74,6 +74,13 @@ defmodule Unleash.Repo do
 
       {:noreply, state}
     end
+  end
+
+  # https://github.com/appcues/mojito/issues/57
+  # Work around for messages received from Mojito after we've passed over the timeout
+  # threshold.
+  def handle_info({:mojito_response, _ref, _message}, state) do
+    {:noreply, state}
   end
 
   defp read_state(%Features{features: []} = state) do

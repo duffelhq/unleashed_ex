@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.7.2
+* Disabled flags should not produce an active variant [!20](https://gitlab.com/afontaine/unleash_ex/-/merge_requests/20) Thanks [Daniel Cooper](https://gitlab.com/danielcooper)
+
+## 1.7.1
+* Handle unexpected mojito_response messages [!19](https://gitlab.com/afontaine/unleash_ex/-/merge_requests/19) Thanks [Daniel Cooper](https://gitlab.com/danielcooper)
+
 ## 1.7.0
 * Also transform the member in a list query [!17](https://gitlab.com/afontaine/unleash_ex/-/merge_requests/17) Thanks [Daniel Cooper](https://gitlab.com/danielcooper)!
 * Update mojito to current [!18](https://gitlab.com/afontaine/unleash_ex/-/merge_requests/18) Thanks [Daniel Cooper](https://gitlab.com/danielcooper)!
