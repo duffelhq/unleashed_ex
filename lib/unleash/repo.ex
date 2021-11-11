@@ -25,11 +25,11 @@ defmodule Unleash.Repo do
   end
 
   def get_feature(name) do
-    GenServer.call(Unleash.Repo, {:get_feature, name})
+    GenServer.call(Unleash.Repo, {:get_feature, name}, 100)
   end
 
   def get_all_feature_names do
-    GenServer.call(Unleash.Repo, {:get_all_feature_names})
+    GenServer.call(Unleash.Repo, {:get_all_feature_names}, 100)
   end
 
   def handle_call({:get_feature, name}, _from, state) do
