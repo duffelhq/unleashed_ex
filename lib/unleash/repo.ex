@@ -105,7 +105,7 @@ defmodule Unleash.Repo do
   defp write_file_state(features) do
     if not File.dir?(Config.backup_dir()) do
       Config.backup_dir()
-      |> File.mkdir_p!()
+      |> File.mkdir_p()
     end
 
     content = Jason.encode_to_iodata!(features)
