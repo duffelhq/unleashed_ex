@@ -1,6 +1,6 @@
 defmodule Unleash.Cache do
   @moduledoc """
-  This module is a cache backed by ets tables. We use it to allow for multiple
+  This module is a cache backed by an ETS table. We use it to allow for multiple
   threads to read the feature flag values concurrently on top of minimizing
   network calls
   """
@@ -10,7 +10,7 @@ defmodule Unleash.Cache do
   def cache_table_name, do: @cache_table_name
 
   @doc """
-  Will create a new ets table named `:unleash_cache`
+  Will create a new ETS table named `:unleash_cache`
   """
   def init(existing_features \\ [], table_name \\ @cache_table_name) do
     :ets.new(table_name, [:named_table, read_concurrency: true])
