@@ -19,12 +19,12 @@ defmodule Unleash.Repo do
 
   def init(%Features{} = features) do
     Cache.init(features.features)
-    {:ok, features}
+    {:ok, []}
   end
 
   def init(_) do
     Cache.init()
-    {:ok, %Features{}}
+    {:ok, []}
   end
 
   def start_link(state) do
@@ -45,7 +45,7 @@ defmodule Unleash.Repo do
     Cache.get_all_feature_names()
   end
 
-  def handle_info({:initialize, etag, retries}, _state) do
+  def handle_info({:initialize, etag, retries}, state) do
     if retries > 0 or retries <= -1 do
       cached_features = %Features{features: Cache.get_features()}
 
@@ -67,26 +67,26 @@ defmodule Unleash.Repo do
         end
 
       if remote_features === cached_features do
-        {:noreply, nil}
+        {:noreply, state}
       else
         Cache.upsert_features(remote_features.features)
         write_file_state(remote_features)
-        {:noreply, nil}
+        {:noreply, state}
       end
     else
       Logger.debug(fn ->
         "Retries === 0, disabling polling"
       end)
 
-      {:noreply, nil}
+      {:noreply, state}
     end
   end
 
   # https://github.com/appcues/mojito/issues/57
   # Work around for messages received from Mojito after we've passed over the timeout
   # threshold.
-  def handle_info({:mojito_response, _ref, _message}, _state) do
-    {:noreply, nil}
+  def handle_info({:mojito_response, _ref, _message}, state) do
+    {:noreply, state}
   end
 
   defp read_file_state(%Features{features: []} = cached_features) do
