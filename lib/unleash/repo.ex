@@ -103,10 +103,7 @@ defmodule Unleash.Repo do
   defp read_file_state(cached_features), do: cached_features
 
   defp write_file_state(features) do
-    if not File.dir?(Config.backup_dir()) do
-      Config.backup_dir()
-      |> File.mkdir_p()
-    end
+    :ok = File.mkdir_p(Config.backup_dir())
 
     content = Jason.encode_to_iodata!(features)
 
