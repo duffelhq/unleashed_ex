@@ -102,6 +102,8 @@ defmodule Unleash.Client do
       "Request sent to #{url} with #{inspect(data, pretty: true)}"
     end)
 
+    Logger.info(result.status_code)
+
     case result do
       {:ok, r} when r.status_code < 200 and r.status_code >= 400 ->
         Logger.error(fn ->
