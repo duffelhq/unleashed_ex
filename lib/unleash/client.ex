@@ -98,13 +98,15 @@ defmodule Unleash.Client do
       |> Jason.encode!()
       |> (&Config.http_client().post(url, headers(), &1)).()
 
-    Logger.debug(fn ->
+    Logger.info(fn ->
       "Request sent to #{url} with #{inspect(data, pretty: true)}"
     end)
 
     case result do
-      {:ok, r } when r.status < 200 and r.status >= 400 ->
-        Logger.error(fn -> "Request #{inspect(data, pretty: true)} failed with result #{inspect(r, pretty: true)}" end)
+      {:ok, r} when r.status < 200 and r.status >= 400 ->
+        Logger.error(fn ->
+          "Request #{inspect(data, pretty: true)} failed with result #{inspect(r, pretty: true)}"
+        end)
 
       {:ok, r} ->
         Logger.debug(fn ->
