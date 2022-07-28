@@ -96,7 +96,6 @@ defmodule Unleash.Client do
       data
       |> tag_data()
       |> Jason.encode!()
-      |> IO.inspect()
       |> (&Config.http_client().post(url, headers(), &1)).()
 
     Logger.debug(fn ->
@@ -110,7 +109,7 @@ defmodule Unleash.Client do
         end)
 
       {:ok, r} ->
-        Logger.debug(fn ->
+        Logger.info(fn ->
           "Result from #{url} was #{inspect(r, pretty: true)}"
         end)
 
